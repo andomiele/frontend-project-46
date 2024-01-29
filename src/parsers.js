@@ -1,9 +1,3 @@
-const parsingFiles = (file, typeFiles) => {
-  if (typeFiles == 'json') { 
-    const objFile = JSON.parse(file);
-    return objFile;
-  }
-  console.log('no');
-};
+const parse = (data) => JSON.parse(data);
 
-export default parsingFiles; 
+export default parse; 
