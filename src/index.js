@@ -1,15 +1,17 @@
-import * as fs from 'node:fs';
-import process from 'node:process';
-import cwd from 'node:process';
+import * as path from 'path';
+import { readFileSync } from 'fs';
+import parsingFiles from '../src/parsers.js'
 
 
 const readFile = (file1, file2) => {
-  const path1 = path.resolve(process.cwd(__fixtures__/file1.json), '/__fixtures__/file1.json')
-  const data1  = fs.readFileSync(path1);
-  console.log(data1 .toString());
+  const currentPath = process.cwd();
 
-  const path2 = path.resolve(process.cwd(__fixtures__/file2.json), '/__fixtures__/file1.json')
-  const data2  = fs.readFileSync(path2);
-    console.log(data2 .toString());
+  const filepath1 = path.resolve(currentPath, file1);
+  const filepath2 = path.resolve(currentPath, file2);
+  const data1 = readFileSync(filepath1, 'utf8');
+  const data2 = readFileSync(filepath2, 'utf8');
+  const parsingFile1 = (data1, typeFile1);
+  const parsingFile2 = (data2, typeFile2);
+  return readFile(parsingFile1, parsingFile2);
 };
 export default readFile;
