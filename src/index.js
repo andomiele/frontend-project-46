@@ -1,18 +1,10 @@
 import * as fs from 'node:fs';
 
-const readFile = () => {
-  const filepath1 = fs.readFileSync(file1.json, (err, data)) {
-    if (callback === err) {
-      return err;
-    }
-    console.log(data)
-  }
+const readFile = (file1, file2) => {
+  const data1 = fs.readFileSync(file1);
+  console.log(data1.toString()); 
 
-  const filepath2 = fs.readFileSync(file2.json, (err, data)) {
-    if (callback === err) {
-      return error;
-    }
-    console.log(data)
-  }
-}
+  const data2 = fs.readFileSync(file2);
+    console.log(data2.toString()); 
+};
 export default readFile;
