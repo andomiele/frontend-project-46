@@ -7,6 +7,9 @@ gendiff:
 lint:
 				npx eslint
 
+publish:
+				nmp publish --dry-run
+
 test:
 				npx jest
 
