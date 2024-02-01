@@ -13,11 +13,7 @@ const readFile = (fileName) => {
 const genDiff = (filepath1, filepath2) => {
   const data1 = readFile(filepath1);
   const data2 = readFile(filepath2);
-  // const entries1 = Object.entries(data1);
-  // const entries2 = Object.entries(data2);
-  const keys1 = Object.keys(data1);
-  const keys2 = Object.keys(data2);
-  const sortKeys = _.sortBy(_.union(keys1, keys2));
+  const sortKeys = _.sortBy(_.union(Object.keys(data1), Object.keys(data2)));
   let result = '';
   const res = {};
   for (const key of sortKeys) {
