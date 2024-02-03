@@ -1,14 +1,9 @@
-import path, { dirname } from 'path';
+import path from 'path';
 import { readFileSync } from 'fs';
-import parse from '../src/parsers.js'
-import _ from 'lodash'
-import { fileURLToPath } from 'url';
+import parse from '../src/parsers.js';
+import _ from 'lodash';
 
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = dirname(__filename);
-const bealdFullPass = (filename) => path.join(__dirname, '..', '__fixtures__', filename);
-
-// const bealdFullPass = (filePath) => path.resolve(process.cwd(), filePath);
+const bealdFullPass = (filePath) => path.resolve(process.cwd(), filePath);
 
 const readFile = (fileName) => {
   const read = readFileSync(bealdFullPass(fileName), 'utf8');
@@ -21,6 +16,7 @@ const genDiff = (filepath1, filepath2) => {
   const sortKeys = _.sortBy(_.union(Object.keys(data1), Object.keys(data2)));
   let result = '';
   const res = {};
+
   for (const key of sortKeys) {
     if ((data1[key] !== undefined && data2[key] === undefined)) {
       result += (`  - ${res[key] = key}: ${data1[key]}\n`);
@@ -28,11 +24,10 @@ const genDiff = (filepath1, filepath2) => {
     else if ((data1[key] === undefined && data2[key] !== undefined)) {
       result += (`  + ${res[key] = key}: ${data2[key]}\n`);
     }
-    else if ((data1[key] !== undefined && data2[key] !== undefined) && (data1[key] ===  data2[key])) {
-      result += (`    ${res[key] = key}: ${data1[key]}\n`);
-    }
     else if ((data1[key] !== undefined && data2[key] !== undefined) && (data1[key] !== data2[key])) {
       result += (`  - ${res[key] = key}: ${data1[key]}\n  + ${res[key] = key}: ${data2[key]}\n`);
+    } else {
+      result += (`    ${res[key] = key}: ${data1[key]}\n`);
     }
   }
   return (`{\n${result}}`);

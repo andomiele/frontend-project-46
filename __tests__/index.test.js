@@ -1,27 +1,16 @@
 import genDiff from '../src/index.js';
-// import { fileURLToPath } from 'url';
-// import { dirname } from 'path';
+import { readFileSync } from 'fs';
+import { fileURLToPath } from 'url';
+import path, { dirname } from 'path';
 
-// const __filename = fileURLToPath(import.meta.url);
-// const __dirname = dirname(__filename);
-// const getFixturePath = (filename) => path.join(__dirname, '..', '__fixtures__', filename);
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
+const getFixturePath = (filePath) => path.join(__dirname, '..', '__fixtures__', filePath);
+const readFixture = (filePath) => readFileSync(getFixturePath(filePath), 'utf8');
 
-const testGenDiff = genDiff();
-
-
-test('testing function genDiff()', () => {
-  expect(testGenDiff('follow: false', ' ')).toBe('    follow: false');
-  // expect(testGenDiff(0, 2023)).toBe(null);
-  // expect(testGenDiff(13, 2023)).toBe(null);
-  // expect(testGenDiff(2, 2024)).toBe(29);
-  // expect(testGenDiff(2, 2023)).toBe(28);
-  // expect(testGenDiff(5, 2023)).toBe(31);
+test('testing function genDiff', () => {
+  const filepath1 = getFixturePath('file1.json');
+  const filepath2 = getFixturePath('file2.json');
+  const result = readFixture('resultjson.txt');
+  expect(genDiff(filepath1, filepath2)).toEqual(result);
 });
-// {
-//   - follow: false
-//     host: hexlet.io
-//   - proxy: 123.234.53.22
-//   - timeout: 50
-//   + timeout: 20
-//   + verbose: true
-// }
