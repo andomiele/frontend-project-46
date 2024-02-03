@@ -4,7 +4,7 @@
   "description": "Compares two configuration files and shows a difference",
   "main": "src/index.js",
   "bin": {
-    "nodejs-package": "bin/gendiff.js"
+    "gendiff": "bin/gendiff.js"
   },
   "simple-git-hooks": {
     "pre-push": "make lint"
@@ -28,10 +28,7 @@
   "homepage": "https://github.com/andomiele/frontend-project-46#readme",
   "dependencies": {
     "commander": "^11.1.0",
-    "debug": "^4.3.4",
-    "lodash": "^4.17.21",
-    "n": "^9.2.0",
-    "stable": "^0.1.8"
+    "lodash": "^4.17.21"
   },
   "devDependencies": {
     "@jest/globals": "^29.6.0",
