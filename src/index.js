@@ -1,9 +1,14 @@
-import * as path from 'path';
+import path, { dirname } from 'path';
 import { readFileSync } from 'fs';
 import parse from '../src/parsers.js'
 import _ from 'lodash'
+import { fileURLToPath } from 'url';
 
-const bealdFullPass = (filePath) => path.resolve(process.cwd(), filePath);
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
+const bealdFullPass = (filename) => path.join(__dirname, '..', '__fixtures__', filename);
+
+// const bealdFullPass = (filePath) => path.resolve(process.cwd(), filePath);
 
 const readFile = (fileName) => {
   const read = readFileSync(bealdFullPass(fileName), 'utf8');
