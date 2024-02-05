@@ -2,35 +2,17 @@ import * as path from 'path';
 import { readFileSync } from 'fs';
 import parse from '../src/parsers.js';
 import _ from 'lodash';
+import getDiffTree from './getDiff.js';
+import stylish from './formatters/stylish.js';
 
 const bealdFullPass = (filePath) => path.resolve(process.cwd(), filePath);
-
-const readFile = (fileName) => {
-  const read = readFileSync(bealdFullPass(fileName), 'utf8');
-  const format = path.extname(fileName)
-  return parse(read, format);
-};
+const readFile = (fileName) => readFileSync(bealdFullPass(fileName), 'utf8');
+const getType = (fileName) => path.extname(fileName);
 
 const genDiff = (filepath1, filepath2, format) => {
-  const data1 = readFile(filepath1, format);
-  const data2 = readFile(filepath2, format);
-  const sortKeys = _.sortBy(_.union(Object.keys(data1), Object.keys(data2)));
-  let result = '';
-  const res = {};
-
-  for (const key of sortKeys) {
-    if ((data1[key] !== undefined && data2[key] === undefined)) {
-      result += (`  - ${res[key] = key}: ${data1[key]}\n`);
-    }
-    else if ((data1[key] === undefined && data2[key] !== undefined)) {
-      result += (`  + ${res[key] = key}: ${data2[key]}\n`);
-    }
-    else if ((data1[key] !== undefined && data2[key] !== undefined) && (data1[key] !== data2[key])) {
-      result += (`  - ${res[key] = key}: ${data1[key]}\n  + ${res[key] = key}: ${data2[key]}\n`);
-    } else {
-      result += (`    ${res[key] = key}: ${data1[key]}\n`);
-    }
-  }
-  return (`{\n${result}}`);
+  format = stylish();
+  const data1 = parse(readFile(filepath1), getType(filepath1));
+  const data2 = parse(readFile(filepath2), getType(filepath1));
+  return (getDiffTree(data1, data2), format)
 };
 export default genDiff;
