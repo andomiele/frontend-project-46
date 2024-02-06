@@ -2,24 +2,21 @@ import _ from 'lodash';
 
 const getDiffTree = (data1, data2) => {
   const sortKeys = _.sortBy(_.union(Object.keys(data1), Object.keys(data2)));
-  let result = '';
-  const res = {};
-
-  for (const key of sortKeys) {
-    if ((data1[key] !== undefined && data2[key] === undefined)) {
-      result += (`  - ${res[key] = key}: ${data1[key]}\n`);
-    }
-    else if ((data1[key] === undefined && data2[key] !== undefined)) {
-      result += (`  + ${res[key] = key}: ${data2[key]}\n`);
-    }
-    else if ((data1[key] !== undefined && data2[key] !== undefined) && (data1[key] !== data2[key])) {
-      result += (`  - ${res[key] = key}: ${data1[key]}\n  + ${res[key] = key}: ${data2[key]}\n`);
-    } 
-    else if ((data1[key] !== undefined && data2[key] !== undefined) && (data1[key] === data2[key])) {
-      result += (`    ${res[key] = key}: ${data1[key]}\n`);
-    }
-  }
-  return (`{\n${result}}`);
+    const result =  sortKeys.map((key) => {
+      if (!Object.hasOwn(data1, key)) {
+        return {key, type: 'added', value: data2[key]};
+      }
+      else if (!Object.hasOwn(data2, key)) {
+        return {key, type: 'removed', value: data1[key]};
+      }      
+      else if ((data1[key] !== data2[key])) {
+        return {key, type: 'changed', value1: data1[key], value2: data2[key]};
+      }
+      else if ((data1[key] === data2[key])) {
+        return {key, type: 'unchanged', value: data1[key]};
+      }
+      return {key, type: 'nested', children: getDiffTree(data1[key], data2[key]),}
+  })
+  return result;
 };
-
 export default getDiffTree;

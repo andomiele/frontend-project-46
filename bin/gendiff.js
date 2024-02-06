@@ -9,11 +9,12 @@ program
 .name('gendiff')
 .description('Compares two configuration files and shows a difference.')
 .version('1.0.0')
-.option('-f, --format','[type]  output format')
-.argument('<filepath1>')
-.argument('<filepath2>')
-.action((filepath1, filepath2) => {
-  console.log(genDiff(filepath1, filepath2));
+.option('-f, --format', '[type]  output format', 'stylish')
+.argument('<filepath1>', 'first configuration file')
+.argument('<filepath2>', 'second configuration file')
+.action((filepath1, filepath2, options) => {
+  const options = program.opts();
+  console.log(genDiff(filepath1, filepath2, options.format));
 });
 
 program.parse(process.argv);
