@@ -12,5 +12,4 @@ const parse = (data, format) => {
       throw new Error(`Invalid format: ${format}`);
   }
 };
-
 export default parse;
