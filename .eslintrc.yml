@@ -5,12 +5,13 @@ env:
   es2021: true
   node: true
   jest: true
+  browser: true
 
 overrides: []
 
 extends:
   - airbnb-base
-  - 'plugin:jest/recommended'
+  - plugin:jest/recommended
 
 parserOptions:
   ecmaVersion: latest
@@ -24,3 +25,4 @@ rules:
   - js: always
   no-underscore-dangle: [2, { "allow": ["__filename", "__dirname"] }]
   max-len: [2, 120]
+  semi: [2, "always"]

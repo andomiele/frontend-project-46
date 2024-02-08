@@ -5,7 +5,7 @@ const getTree = (data1, data2) => {
   const data2Keys = _.keys(data2);
   const sortKeys = _.sortBy(_.union(data1Keys, data2Keys));
 
-  const children =  sortKeys.map((key) => {
+  const children = sortKeys.map((key) => {
     if (_.isObject(data1[key]) && _.isObject(data2[key])) {
       return {
         type: 'nested',

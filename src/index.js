@@ -1,7 +1,6 @@
 import * as path from 'path';
 import { readFileSync } from 'fs';
-import parse from '../src/parsers.js';
-import _ from 'lodash';
+import parse from './parsers.js';
 import getDiffTree from './getDiff.js';
 import formatter from './formatters/stylish.js';
 
