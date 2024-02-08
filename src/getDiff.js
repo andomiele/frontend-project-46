@@ -8,44 +8,37 @@ const getTree = (data1, data2) => {
   const children =  sortKeys.map((key) => {
     if (_.isObject(data1[key]) && _.isObject(data2[key])) {
       return {
-        type: 'nested', 
-        key, 
-        children: getTree(data1[key], data2[key])
+        type: 'nested',
+        key,
+        children: getTree(data1[key], data2[key]),
       };
     }
-    // if (_.isObject(data1[key]) && !_.isObject(data2[key])) {
-    //   return {
-    //     type: 'removed', 
-    //     key, 
-    //     children: getTree(data1[key])
-    //   };
-    // }
     if (!_.has(data2, key)) {
       return {
-        type: 'removed', 
-        key, 
-        value: data1[key]
+        type: 'removed',
+        key,
+        value: data1[key],
       };
     }
     if (!_.has(data1, key)) {
       return {
-        type: 'added', 
-        key, 
-        value: data2[key]
+        type: 'added',
+        key,
+        value: data2[key],
       };
     }
     if (!_.isEqual(data1[key], data2[key])) {
       return {
-        type: 'changed', 
-        key, 
-        firstValue: data1[key], 
-        secondValue: data2[key]
+        type: 'changed',
+        key,
+        firstValue: data1[key],
+        secondValue: data2[key],
       };
     }
     return {
-      type: 'unchanged', 
-      key, 
-      value: data1[key], 
+      type: 'unchanged',
+      key,
+      value: data1[key],
     };
   });
   return children;

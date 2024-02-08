@@ -23,7 +23,7 @@ const stringify = (data, depth) => {
 const stylish = (data) => {
   const iter = (node, depth) => {
     switch (node.type) {
-      case 'root': 
+      case 'root':
         const result = node.children.flatMap((child) => iter(child, depth));
         return joinStrings(result, depth);
       case 'nested':
