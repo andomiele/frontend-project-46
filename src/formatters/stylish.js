@@ -1,47 +1,38 @@
 import _ from 'lodash';
 
-const replacer = ' ';
-const spacesCount = 4;
-const currentIndent = (depth) => replacer.repeat(spacesCount * depth - 2);
-const pastIndent = (depth) => replacer.repeat(spacesCount * depth - spacesCount);
-
-const joinStrings = (lines, depth) => [
-  '{',
-  ...lines,
-  `${pastIndent(depth)}}`,
-].join('\n');
+const currentIndent = (depth, replacer = ' ', spacesCount = 4) => replacer.repeat(spacesCount * depth - 2);
+const pastIndent = (depth, replacer = ' ', spacesCount = 4) => replacer.repeat(spacesCount * depth);
 
 const stringify = (data, depth) => {
   if (!_.isObject(data)) {
     return String(data);
   }
   const keys = _.keys(data);
-  const lines = keys.map((key) => `${currentIndent(depth)}  ${key}: ${stringify(data[key], depth + 1)}`);
-  return joinStrings(lines, depth);
+  const lines = keys.map((key) => `${currentIndent(depth + 1)}  ${key}: ${stringify(data[key], depth + 1)}`);
+  return `{\n${lines.join('\n')}\n${pastIndent(depth)}}`;
 };
 
 const stylish = (data) => {
   const iter = (node, depth) => {
     switch (node.type) {
-      case 'root':
-        const result = node.children.flatMap((child) => iter(child, depth));
-        return joinStrings(result, depth);
-      case 'nested':
+      case 'nested': {
         const childrenToString = node.children.flatMap((child) => iter(child, depth + 1));
-        return `${currentIndent(depth)}  ${node.key}: ${joinStrings(childrenToString, depth + 1)}`;
+        return `${currentIndent(depth)}  ${node.key}: {\n${childrenToString.join('\n')}\n${pastIndent(depth)}}`;
+      }
       case 'added':
-        return `${currentIndent(depth)}+ ${node.key}: ${stringify(node.value, depth + 1)}`;
+        return `${currentIndent(depth)}+ ${node.key}: ${stringify(node.value, depth)}`;
       case 'removed':
-        return `${currentIndent(depth)}- ${node.key}: ${stringify(node.value, depth + 1)}`;
+        return `${currentIndent(depth)}- ${node.key}: ${stringify(node.value, depth)}`;
       case 'unchanged':
-        return `${currentIndent(depth)}  ${node.key}: ${stringify(node.value, depth + 1)}`;
+        return `${currentIndent(depth)}  ${node.key}: ${stringify(node.value, depth)}`;
       case 'changed':
-        return [`${currentIndent(depth)}- ${node.key}: ${stringify(node.firstValue, depth + 1)}`,
-          `${currentIndent(depth)}+ ${node.key}: ${stringify(node.secondValue, depth + 1)}`];
+        return [`${currentIndent(depth)}- ${node.key}: ${stringify(node.firstValue, depth)}`,
+          `${currentIndent(depth)}+ ${node.key}: ${stringify(node.secondValue, depth)}`];
       default:
         throw Error('Uncorrect data');
     }
   };
-  return iter(data, 1);
+  const result = data.map((item) => iter(item, 1));
+  return `{\n${result.join('\n')}\n}`;
 };
 export default stylish;

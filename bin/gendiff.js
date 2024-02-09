@@ -12,7 +12,8 @@ program
   .option('-f, --format', '[type]  output format', 'stylish')
   .argument('<filepath1>', 'first configuration file')
   .argument('<filepath2>', 'second configuration file')
-  .action((filepath1, filepath2, options) => {
+  .action((filepath1, filepath2) => {
+    const options = program.opts();
     console.log(genDiff(filepath1, filepath2, options.format));
   });
 
