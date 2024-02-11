@@ -7,6 +7,8 @@ const format = (tree, outputFormat) => {
       return formatStylish(tree);
     case 'plain':
       return formatPlain(tree);
+    case 'json':
+      return JSON.stringify(tree);
     default:
       throw new Error('Uncorrect data');
   }
