@@ -26,7 +26,8 @@ const formatPlain = (data) => {
       case 'unchanged':
         return [];
       case 'changed':
-        return `Property '${getPropety(node.key, propety)}' was updated. From ${stringify(node.firstValue)} to ${stringify(node.secondValue)}`;
+        return `Property '${getPropety(node.key, propety)}' was updated. 
+        From ${stringify(node.firstValue)} to ${stringify(node.secondValue)}`;
       default:
         throw Error('Uncorrect data');
     }
