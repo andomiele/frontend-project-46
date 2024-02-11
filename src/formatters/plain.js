@@ -13,22 +13,23 @@ const stringify = (data) => {
 };
 
 const formatPlain = (data) => {
-  const iter = (node, propety = []) => {
+  const iter = (node, path = []) => {
+    const property = getPropety(node.key, path);
     switch (node.type) {
       case 'nested': {
-        const childrenToString = node.children.flatMap((child) => iter(child, [getPropety(node.key, propety)]));
+        const childrenToString = node.children.flatMap((child) => iter(child, [property]));
         return childrenToString.join('\n');
       }
       case 'added':
-        return `Property '${getPropety(node.key, propety)}' was added with value: ${stringify(node.value)}`;
+        return `Property '${property}' was added with value: ${stringify(node.value)}`;
       case 'removed':
-        return `Property '${getPropety(node.key, propety)}' was removed`;
+        return `Property '${property}' was removed`;
       case 'unchanged':
         return [];
       case 'changed': {
         const value1 = stringify(node.firstValue);
         const value2 = stringify(node.secondValue);
-        return `Property '${getPropety(node.key, propety)}' was updated. From ${value1} to ${value2}`;
+        return `Property '${property}' was updated. From ${value1} to ${value2}`;
       }
       default:
         throw Error('Uncorrect data');

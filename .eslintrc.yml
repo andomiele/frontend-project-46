@@ -24,5 +24,5 @@ rules:
   - ignorePackages
   - js: always
   no-underscore-dangle: [2, { "allow": ["__filename", "__dirname"] }]
-  max-len: [2, 119]
+  max-len: [2, 100]
   semi: [2, "always"]
