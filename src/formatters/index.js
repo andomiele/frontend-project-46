@@ -1,14 +1,15 @@
-import stylish from './stylish.js';
-import plain from './plain.js';
+import formatStylish from './stylish.js';
+import formatPlain from './plain.js';
 
-const formatter = (tree, format) => {
-  switch (format) {
+const format = (tree, outputFormat) => {
+  switch (outputFormat) {
     case 'stylish':
-      return stylish(tree);
+      return formatStylish(tree);
     case 'plain':
-      return plain(tree);
+      return formatPlain(tree);
     default:
       throw new Error('Uncorrect data');
   }
 };
-export default formatter;
+
+export default format;

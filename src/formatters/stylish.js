@@ -12,7 +12,7 @@ const stringify = (data, depth) => {
   return `{\n${lines.join('\n')}\n${pastIndent(depth)}}`;
 };
 
-const stylish = (data) => {
+const formatStylish = (data) => {
   const iter = (node, depth) => {
     switch (node.type) {
       case 'nested': {
@@ -35,4 +35,4 @@ const stylish = (data) => {
   const result = data.map((item) => iter(item, 1));
   return `{\n${result.join('\n')}\n}`;
 };
-export default stylish;
+export default formatStylish;

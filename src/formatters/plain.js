@@ -1,38 +1,39 @@
 import _ from 'lodash';
 
-const joinStrings = (keys) => [...keys].join('.');
+const getPropety = (key, property = []) => [...property, key].join('.');
 
-const getKey = (data) => {
-  if (!_.isObject(data)) {
-    return String(data);
+const stringify = (data) => {
+  if (_.isObject(data)) {
+    return '[complex value]';
   }
-  const keys = _.keys(data);
-  const lines = keys.map((key) => `${getKey(key)}: ${data[key]}`);
-  return joinStrings(lines);
+  if (typeof data === 'string') {
+    return `'${data}'`;
+  }
+  return String(data);
 };
 
-const plain = (data) => {
-  const iter = (node) => {
+const formatPlain = (data) => {
+  const iter = (node, propety = []) => {
     switch (node.type) {
-      case 'root': {
-        const result = node.children.flatMap((child) => iter(child));
-        return joinStrings(result);
-      }
       case 'nested': {
-        const childrenToString = node.children.flatMap((child) => iter(child));
-        return joinStrings(childrenToString);
+        const childrenToString = node.children.flatMap((child) => iter(child, [getPropety(node.key, propety)]));
+        return childrenToString.join('\n');
       }
       case 'added':
-        return `Property '${getKey(node.key)}' was added with value: '${node.value}'`;
+        return `Property '${getPropety(node.key, propety)}' was added with value: ${stringify(node.value)}`;
       case 'removed':
-        return `Property '${getKey(node.key)}' was removed`;
+        return `Property '${getPropety(node.key, propety)}' was removed`;
+      case 'unchanged':
+        return [];
       case 'changed':
-        return `Property '${getKey(node.key)}' was updated. From '${node.firstValue}' to '${node.secondValue}'`;
+        return `Property '${getPropety(node.key, propety)}' was updated. From ${stringify(node.firstValue)} to ${stringify(node.secondValue)}`;
       default:
         throw Error('Uncorrect data');
     }
   };
-  const result = data.map((item) => iter(item));
-  return iter(result);
+  return data
+    .flatMap((item) => iter(item))
+    .join('\n');
 };
-export default plain;
+
+export default formatPlain;
