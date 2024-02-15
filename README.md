@@ -39,26 +39,19 @@ git clone https://github.com/andomiele/frontend-project-46.git
 sudo npm link
 
 ```
-Вызов справочной информации 
 
-[![asciicast]()]()
+Пример работы формата по умолчанию:
 
-Пример работы с плоскими JSON файлами :
+[![asciicast](https://asciinema.org/a/hWoRQdJo5ReQ7FWYAeMEZF4iF.svg)](https://asciinema.org/a/hWoRQdJo5ReQ7FWYAeMEZF4iF)
 
-[![asciicast]()]()
+Пример работы формата Stylish: 
 
-Пример работы с плоскими YAML файлами :
-
-[![asciicast]()]()
-
-Пример работы с вложенными объктами :
-
-[![asciicast]()]()
+[![asciicast](https://asciinema.org/a/Io85wT1TvGk44hWkL7m1FERXU.svg)](https://asciinema.org/a/Io85wT1TvGk44hWkL7m1FERXU)
 
 Пример работы формата Plain: 
 
-[![asciicast]()]()
+[![asciicast](https://asciinema.org/a/LaTGttmjNhIej3wLOsLIwJ6J6.svg)](https://asciinema.org/a/LaTGttmjNhIej3wLOsLIwJ6J6)
 
 Вывод в формате JSON:
 
-[![asciicast]()]()
+[![asciicast](https://asciinema.org/a/mtMApxdyTbMUAixTyIzBYzBo2.svg)](https://asciinema.org/a/mtMApxdyTbMUAixTyIzBYzBo2)

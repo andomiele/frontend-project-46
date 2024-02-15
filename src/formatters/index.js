@@ -10,7 +10,7 @@ const format = (tree, outputFormat) => {
     case 'json':
       return JSON.stringify(tree);
     default:
-      throw new Error('Uncorrect data');
+      throw new Error(`Uncorrect data: ${outputFormat}`);
   }
 };
 

@@ -1,11 +1,11 @@
 import _ from 'lodash';
 
 const getDiffTree = (data1, data2) => {
-  const data1Keys = _.keys(data1);
-  const data2Keys = _.keys(data2);
-  const sortKeys = _.sortBy(_.union(data1Keys, data2Keys));
+  const keys1 = _.keys(data1);
+  const keys2 = _.keys(data2);
+  const sortedKeys = _.sortBy(_.union(keys1, keys2));
 
-  const children = sortKeys.map((key) => {
+  return sortedKeys.map((key) => {
     if (!_.has(data2, key)) {
       return { type: 'removed', key, value: data1[key] };
     }
@@ -19,18 +19,12 @@ const getDiffTree = (data1, data2) => {
       return {
         type: 'changed',
         key,
-        firstValue: data1[key],
-        secondValue: data2[key],
+        value1: data1[key],
+        value2: data2[key],
       };
     }
     return { type: 'unchanged', key, value: data1[key] };
   });
-  return children;
 };
-
-// const getDiffTree = (data1, data2) => ({
-//   type: 'root',
-//   children: getTree(data1, data2),
-// });
 
 export default getDiffTree;
