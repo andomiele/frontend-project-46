@@ -1,9 +1,9 @@
 import _ from 'lodash';
 
 const indent = (depth, isFull, replacer = ' ', spacesCount = 4) => {
-  const fullIndent = replacer.repeat(spacesCount * depth);
-  const partialIndent = replacer.repeat(spacesCount * depth - 2);
-  return isFull === true ? partialIndent : fullIndent;
+  const fullIndent = replacer.repeat(spacesCount * depth - 2);
+  const partialIndent = replacer.repeat(spacesCount * depth);
+  return isFull ? fullIndent : partialIndent;
 };
 
 const stringify = (data, depth) => {
